@@ -1,7 +1,7 @@
 # CPU-Benchmark-AHK-
 - A CPU benchmark made in Autohotkey v1.1
-- Repository includes both an .exe and .ahk version. You only need one.
-- **Currently, due to an oversight on my part you WILL need autohotkey v1.1 installed. I will fix this when I find the time.**
+- **Requires Autohotkey v1.1 installed**
+- Autohotkey install Link: https://www.autohotkey.com/download/1.1/AutoHotkey112207_Install.exe
 - The program utilizes Factorials to stress the CPU.
 
 ![image](https://github.com/user-attachments/assets/957e8d48-dd59-4dc7-a605-11562b22d30b)
