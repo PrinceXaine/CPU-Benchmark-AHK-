@@ -187,6 +187,8 @@ Hour := SubStr(BenchTime, 9, 2)
 Minute := SubStr(BenchTime, 11, 2)
 Second := SubStr(BenchTime, 13, 2)
 FileAppend, //===%Year%-%Month%-%Day% %Hour%:%Minute%:%Second%===//`n, %A_ScriptDir%\CPUBenchmarkResults.txt
+FileAppend, Processor: %ProcessorName%`n,%A_ScriptDir%\CPUBenchmarkResults.txt
+FileAppend, Effective Speed: %ProcessorSpeed%`n,%A_ScriptDir%\CPUBenchmarkResults.txt
 FileAppend, Threads Tested: %NoProcessors%`n, %A_ScriptDir%\CPUBenchmarkResults.txt
 FileAppend, Single-Thread: %ST%`n, %A_ScriptDir%\CPUBenchmarkResults.txt
 FileAppend, Multi-Thread: %MT%`n, %A_ScriptDir%\CPUBenchmarkResults.txt
