@@ -1,8 +1,7 @@
 ;///----APPLICATION-----///;
 #NoEnv
-#Maxmem 4096
-#NoTrayIcon
 #SingleInstance ignore
+Process, Priority,, High
 SendMode Input
 random, Generate, 100000000,
 FileCreateDir %A_ScriptDir%\%Generate%
@@ -44,8 +43,11 @@ Gui, Add, Edit, vNoProcessors w100 Readonly,
 Gui, Add, updown,range1-%ProcessorCount%
 Guicontrol,, NoProcessors, %ProcessorCount%
 Gui, Add, Button, vStart w100 gStart, Start Benchmark
+Gui, Add, Button, vStress w100 gStress, Stress Test
+Gui, Add, button, xm ys+266 vStopStress w100 gStopStress, Stop
 gui, Add, Edit, x0 y0 w0 h0 vTrackOpened,
 guicontrol, hide, TrackOpened
+guicontrol, hide, StopStress
 Gui, Show,, CPU Benchmark
 Gui +ToolWindow
 Return
@@ -98,8 +100,7 @@ Start:
             BigFactorial := Factorial(N)
         }
         Count++
-        }
-        
+        }        
     SetTimer, SingleThreadTimer, off
     ;-----------------------;
 
@@ -128,7 +129,8 @@ gui, submit, nohide
     ;------Run Workers------;
     Loop %NoProcessors%
         {
-            run %A_WorkingDir%\Core%A_Index%.ahk
+            run %A_WorkingDir%\Core%A_Index%.ahk,,, PID
+            Process, Priority, %PID%, H
             Guicontrol, %RunCount%:, BenchText, Starting Workers: %A_Index%/%NoProcessors%
             Guicontrol, 1:, TrackOpened, %A_Index%
         }
@@ -195,6 +197,50 @@ loop %NoProcessors%
     }
 msgbox Results saved in %A_ScriptDir%\CPUBenchmarkResults.txt
 Return
+
+;///-----STRESS TEST------///;
+Stress:
+gui, submit, nohide
+Guicontrol, hide, Stress
+Guicontrol, show, StopStress
+ ;-----Create Workers-----;
+    Loop %NoProcessors%
+        {
+            CPUWorkers := "#NoEnv`n#NoTrayIcon`n#SingleInstance force`nSendMode Input`nSetWorkingDir %A_ScriptDir%`nSetBatchLines, -1`n`nStartStress:`nLoop`n{`nsleep 50`nControlGetText, ProcessorCount, Edit4, CPU Benchmark`nControlGetText, Tracked, Edit5, CPU Benchmark`nIf (Tracked != ProcessorCount)`n{`n;wait for something to happen.`n}`nelse`n{`nbreak`n}`n}`n`nBenchStart = 1`nSetTimer, MultiThreadTimer, 10000`n`nLoop`n{`nFactorial(n)`n{`nresult := 1`nLoop, %n%`n{`nresult *= A_Index`n}`nreturn result`n}`nLoop 100`n{`nN := 9001`nBigFactorial := Factorial(N)`n}`nCount++`n}`nreturn`n`nMultiThreadTimer:`nScore := round(Count, 2)`nFileAppend, %score%, %A_ScriptDir%\Core" . A_Index . ".txt`nFileDelete, %A_ScriptDir%\Core" . A_Index . ".ahk`ngoto startstress"
+            FileAppend, %CPUWorkers%, %A_WorkingDir%\Core%A_Index%.ahk
+            Guicontrol, %RunCount%:, BenchText, Creating Workers: %A_Index%/%NoProcessors%
+        }
+    ;-----------------------;
+
+
+    ;------Run Workers------;
+    Loop %NoProcessors%
+        {
+            run %A_WorkingDir%\Core%A_Index%.ahk,,, PID
+            Process, Priority, %PID%, H
+            Guicontrol, %RunCount%:, BenchText, Starting Workers: %A_Index%/%NoProcessors%
+            Guicontrol, 1:, TrackOpened, %A_Index%
+            PID%A_Index% := PID
+        }
+return
+
+StopStress:
+gui, submit, nohide
+    guicontrol, show, Stress
+    guicontrol, hide, StopStress
+    critical
+    Loop %NoProcessors%
+    {
+    CloseProcess := % PID%A_Index%
+    process, close, %CloseProcess%
+    }
+    critical off
+    loop %NoProcessors%
+    {
+        FileDelete, %A_WorkingDir%\Core%A_Index%.ahk
+        FileDelete, %A_WorkingDir%\Core%A_Index%.txt
+    }
+return
 
 ;///----TIMERS-----///;
 BenchTimer:
