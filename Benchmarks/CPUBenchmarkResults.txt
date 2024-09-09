@@ -13,3 +13,11 @@ Threads Tested: 8
 Single-Thread: 66.00
 Multi-Thread: 280.00
 Ratio: 4.24
+
+//===2024-09-09 19:47:00===//
+Processor: AMD Ryzen 9 7950X3D 16-Core Processor          
+Effective Speed: 4201 MHz
+Threads Tested: 32
+Single-Thread: 158.00
+Multi-Thread: 2446.00
+Ratio: 15.48
