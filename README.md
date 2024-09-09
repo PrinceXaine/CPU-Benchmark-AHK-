@@ -12,6 +12,7 @@
 - To opt out of the multi-threading test, simply reduce the # of Threads to 1.
 - The test will lock your mouse.
 - The test will automatically complete in ~20 seconds.
+- You may, at any time during the test, press the escape ("ESC") key to stop the regain your mouse movement, stop all benchmarking threads and exit the program.
 
 # Results
 - The script will dump the results, with a timestamp, into whatever directory it is in.
