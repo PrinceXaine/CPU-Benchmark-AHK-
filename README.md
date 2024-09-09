@@ -17,5 +17,14 @@
 - The script will dump the results, with a timestamp, into whatever directory it is in.
 - You only need ensure that you have write access to the directory.
 
+# Other Features
+- Stress Test: Allows you to run a stress test for any length of time on your processor.
+- High Priority: The program is built to run in high-priority. This offers consistent results.
+
 # Future Updates
-Maybe a stress test feature?
+- Include timer for stress test.
+- Include Real-Time option.
+
+# Will not include
+- This program is stand-alone. I will not be including temperature sensors as AHK does not support it.
+  If you wish to monitor temps, you will need to utilize a third-party application.
