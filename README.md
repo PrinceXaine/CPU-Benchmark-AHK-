@@ -25,9 +25,10 @@
 - Include timer for stress test.
 - Include Real-Time option.
 
-# Will not include
+# Limitations
 - This program is stand-alone. I will not be including temperature sensors as AHK does not support it.
   If you wish to monitor temps, you will need to utilize a third-party application.
+- Much like the temperature monitoring, Autohotkey has no way of identifying the turbo overclock speed of your processor. It will only identify the base speed.
 
 # How it works:
 - When user launches the program, a temp folder with a random 9+ digit code is created in the file directory.
