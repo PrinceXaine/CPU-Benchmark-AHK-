@@ -1,7 +1,7 @@
 ;///----APPLICATION-----///;
 #NoEnv
 #SingleInstance ignore
-Process, Priority,, High
+Process, Priority,, H
 SendMode Input
 random, Generate, 100000000,
 FileCreateDir %A_ScriptDir%\%Generate%
@@ -133,6 +133,7 @@ gui, submit, nohide
             Process, Priority, %PID%, H
             Guicontrol, %RunCount%:, BenchText, Starting Workers: %A_Index%/%NoProcessors%
             Guicontrol, 1:, TrackOpened, %A_Index%
+            PID%A_Index% := PID
         }
     ;-----------------------;  
 
@@ -265,5 +266,16 @@ exitapp
 
 Esc::
 BlockInput, mousemoveoff
+  critical
+    Loop %NoProcessors%
+        {
+            CloseProcess := % PID%A_Index%
+            process, close, %CloseProcess%
+        }
+    loop %NoProcessors%
+        {
+            FileDelete, %A_WorkingDir%\Core%A_Index%.ahk
+            FileDelete, %A_WorkingDir%\Core%A_Index%.txt
+        }
 FileRemoveDir, %A_ScriptDir%\%Generate%, 1
 exitapp
