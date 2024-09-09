@@ -28,3 +28,14 @@
 # Will not include
 - This program is stand-alone. I will not be including temperature sensors as AHK does not support it.
   If you wish to monitor temps, you will need to utilize a third-party application.
+
+# How it works:
+- When user launches the program, a temp folder with a random 9+ digit code is created in the file directory.
+- When user selects "Benchmark", the script runs a single-thread test within the "parent" script.
+    (This just means the script does not launch any other scripts to run this test.)
+- When # of Threads is greater than 1, the script then runs a multi-thread test by dynamically creating Core"x".ahk files within the script directory temp folder.
+- After creating the files, the script launches these files in "high priority" mode, which offers more consistent results.
+- The benchmark results are then saved in a text file called "CPUBenchmarkResults.txt"
+- When the program is closed, the temporary folder and all of the dynamically created cores and files are deleted.
+- If the user presses the "ESC" key during either the benchmark or stress tests, the core.ahk processes are destroyed, and the temp folder is deleted. Then the program exits.
+- The stress test does the same thing as the multi-threaded benchmark, except those cores are coded to continue until user exits.
