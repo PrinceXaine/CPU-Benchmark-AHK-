@@ -1,0 +1,15 @@
+//===2024-09-06 02:18:59===//
+Processor: Intel(R) Xeon(R) CPU           X5470  @ 3.33GHz
+Effective Speed: 4600 MHz
+Threads Tested: 4
+Single-Thread: 65.00
+Multi-Thread: 259.00
+Ratio: 3.98
+
+//===2024-09-09 13:56:53===//
+Processor: Intel(R) Core(TM) i7-3770K CPU @ 3.50GHz
+Effective Speed: 3501 MHz
+Threads Tested: 8
+Single-Thread: 66.00
+Multi-Thread: 280.00
+Ratio: 4.24
