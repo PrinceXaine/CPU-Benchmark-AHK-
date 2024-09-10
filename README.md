@@ -28,7 +28,6 @@
 
 # Future Updates
 - Include timer for stress test.
-- Include Real-Time option.
 
 # Limitations
 - This program is stand-alone. I will not be including temperature sensors as AHK does not support it.
