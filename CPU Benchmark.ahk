@@ -1,14 +1,29 @@
-;///----APPLICATION-----///;
+;///----ARGUMENTS-----///;
 #NoEnv
 #SingleInstance ignore
-Process, Priority,, H
 SendMode Input
-random, Generate, 100000000,
-FileCreateDir %A_ScriptDir%\%Generate%
-SetWorkingDir %A_ScriptDir%\%Generate%
 SetBatchLines, -1
 RunCount = 1
 FinalResult = 0
+
+
+;///----ELEVATION-----///;
+if (A_IsAdmin = 0)
+    {
+        Run *RunAs %A_ScriptDir%\CPU Benchmark.ahk,, UseErrorLevel
+            if ErrorLevel
+                {
+                    MsgBox, You declined admin privileges. The script will continue without them.
+                    goto SkipUAC
+                }
+        ExitApp
+    }
+SkipUAC:
+
+;///----GENERATE FILE----///;
+random, Generate, 100000000,
+FileCreateDir %A_ScriptDir%\%Generate%
+SetWorkingDir %A_ScriptDir%\%Generate%
 
 ;///----GET PROCESSOR THREADS, NAME, SPEED-----///;
 EnvGet, ProcessorCount, NUMBER_OF_PROCESSORS
@@ -45,15 +60,37 @@ Guicontrol,, NoProcessors, %ProcessorCount%
 Gui, Add, Button, vStart w100 gStart, Start Benchmark
 Gui, Add, Button, vStress w100 gStress, Stress Test
 Gui, Add, button, xm ys+266 vStopStress w100 gStopStress, Stop
+if (A_IsAdmin = 1)
+    {
+Gui, Add, checkbox, vRealTime gPriorityWarn, Enable Real-Time
+    }
 gui, Add, Edit, x0 y0 w0 h0 vTrackOpened,
 guicontrol, hide, TrackOpened
 guicontrol, hide, StopStress
-Gui, Show,, CPU Benchmark
+if (A_IsAdmin = 1)
+{
+    Gui, Show,, CPU Benchmark [Admin]
+}
+Else
+{
+    Gui, Show,, CPU Benchmark 
+}
 Gui +ToolWindow
 Return
 
 ;///----BENCHMARK-----///;
 Start:
+    gui, submit, NoHide
+    if (RealTime = 1)
+    {
+        Priority = RealTime
+        Process, Priority,, RealTime
+    }
+    else
+    {
+        Priority = H
+        Process, Priority,, H
+    }
     ;--Alert User of restricted mouse movement (once per session)--;
     if (runonce != 1)
     {
@@ -130,7 +167,7 @@ gui, submit, nohide
     Loop %NoProcessors%
         {
             run %A_WorkingDir%\Core%A_Index%.ahk,,, PID
-            Process, Priority, %PID%, H
+            Process, Priority, %PID%, %Priority%
             Guicontrol, %RunCount%:, BenchText, Starting Workers: %A_Index%/%NoProcessors%
             Guicontrol, 1:, TrackOpened, %A_Index%
             PID%A_Index% := PID
@@ -191,6 +228,14 @@ FileAppend, //===%Year%-%Month%-%Day% %Hour%:%Minute%:%Second%===//`n, %A_Script
 FileAppend, Processor: %ProcessorName%`n,%A_ScriptDir%\CPUBenchmarkResults.txt
 FileAppend, Effective Speed: %ProcessorSpeed%`n,%A_ScriptDir%\CPUBenchmarkResults.txt
 FileAppend, Threads Tested: %NoProcessors%`n, %A_ScriptDir%\CPUBenchmarkResults.txt
+if (RealTime = 1)
+{
+    FileAppend, Priority: Real-Time`n, %A_ScriptDir%\CPUBenchmarkResults.txt
+}
+Else
+{
+    FileAppend, Priority: High`n, %A_ScriptDir%\CPUBenchmarkResults.txt
+}
 FileAppend, Single-Thread: %ST%`n, %A_ScriptDir%\CPUBenchmarkResults.txt
 FileAppend, Multi-Thread: %MT%`n, %A_ScriptDir%\CPUBenchmarkResults.txt
 FileAppend, Ratio: %Ratio%`n`n, %A_ScriptDir%\CPUBenchmarkResults.txt
@@ -258,6 +303,21 @@ Score := round(Count, 2)
 Guicontrol,, ST, %Score%
 BenchStart = 0
 return
+
+PriorityWarn:
+    if (Warn != 1)
+    {
+        Msgbox, 4404, Warning!, Enabling Real-Time will further reduce responsiveness while the benchmark is running.`n`nThis option only affects the benchmark option. The stress test will still be run in High Priority Mode only. Continue?
+        ifmsgbox Yes
+        {
+            Warn = 1
+        }
+        Else
+        {
+            guicontrol,, RealTime, 0
+        }
+    }
+Return
 
 ;///----ESCAPE SCRIPT-----///;
 Guiclose:
