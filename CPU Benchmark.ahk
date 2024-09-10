@@ -47,7 +47,7 @@ For item in colItems
 gui, color, 0
 gui, font, cFFFFFF
 gui, font, bold
-Gui, Add, Text,vProcessorUpdateSpeed, %ProcessorName%`n`nBase Clock: %ProcessorSpeed%
+Gui, Add, Text,vProcessorUpdateSpeed, %ProcessorName%`n`nBase Clock: %ProcessorSpeed% MHz
 Gui, Add, Text,, Single-Thread Score
 Gui, Add, Edit, vST w100 readonly,
 Gui, Add, Text,, Multi-Thread Score
