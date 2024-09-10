@@ -42,11 +42,12 @@ For item in colItems
         ProcessorSpeed := "Processor speed not available"
 }
 
+
 ;///----CREATE GUI-----///;
 gui, color, 0
 gui, font, cFFFFFF
 gui, font, bold
-Gui, Add, Text,, %ProcessorName%`n`nBase Clock: %ProcessorSpeed%
+Gui, Add, Text,vProcessorUpdateSpeed, %ProcessorName%`n`nBase Clock: %ProcessorSpeed%
 Gui, Add, Text,, Single-Thread Score
 Gui, Add, Edit, vST w100 readonly,
 Gui, Add, Text,, Multi-Thread Score
@@ -62,7 +63,7 @@ Gui, Add, Button, vStress w100 gStress, Stress Test
 Gui, Add, button, xm ys+266 vStopStress w100 gStopStress, Stop
 if (A_IsAdmin = 1)
     {
-Gui, Add, checkbox, vRealTime gPriorityWarn, Enable Real-Time
+Gui, Add, checkbox, xm ys+310 vRealTime gPriorityWarn, Enable Real-Time
     }
 gui, Add, Edit, x0 y0 w0 h0 vTrackOpened,
 guicontrol, hide, TrackOpened
@@ -119,7 +120,10 @@ Start:
     
 
     ;---SingleThread Test---;
+    if (RealTime != 1)
+    {
     SetTimer, BenchTimer, 1000 ;ProgressBar Timer
+    }
     SetTimer, SingleThreadTimer, 10000 ;Sets the 10 second Timer for Single-Thread Testing.
     While(BenchStart != 0)
         {
@@ -162,7 +166,6 @@ gui, submit, nohide
         }
     ;-----------------------;
 
-
     ;------Run Workers------;
     Loop %NoProcessors%
         {
@@ -177,6 +180,7 @@ gui, submit, nohide
     ;--Control Progress Bar-;
     ProgressbarStatus = 0 ;resumes the progress bar
     Guicontrol, %RunCount%:, BenchText, Running Multi-Thread Test...
+
     sleep 11000
     Loop %NoProcessors%
     {
@@ -303,6 +307,7 @@ Score := round(Count, 2)
 Guicontrol,, ST, %Score%
 BenchStart = 0
 return
+
 
 PriorityWarn:
     if (Warn != 1)
