@@ -4,8 +4,10 @@
 - Autohotkey install Link: https://www.autohotkey.com/download/1.1/AutoHotkey112207_Install.exe
 - The program utilizes Factorials to stress the CPU.
 
-![image](https://github.com/user-attachments/assets/957e8d48-dd59-4dc7-a605-11562b22d30b)
-![image](https://github.com/user-attachments/assets/df56124d-1688-40ef-9350-6a2f1b879283)
+- ![image](https://github.com/user-attachments/assets/65fd6d05-7319-4d11-8c9d-0fdeaffd8339)
+- ![image](https://github.com/user-attachments/assets/b0947122-065f-49cf-a085-88ee3bffd7fd)
+![image](https://github.com/user-attachments/assets/aad0c5ca-b730-4a39-b653-022ddd9e06a3)
+
 
 # How to Use
 - To use, just choose how many threads you would like to use, then click "Start Benchmark".
@@ -21,6 +23,8 @@
 # Other Features
 - Stress Test: Allows you to run a stress test for any length of time on your processor.
 - High Priority: The program is built to run in high-priority. This offers consistent results.
+- Admin Privileges: The script will ask you for admin privileges when it starts. If the user declines, the script will run without them.
+- Real-Time: Requires Admin Privileges. Further increases how precise the benchmark is. Does not apply to stress test for obvious reasons.
 
 # Future Updates
 - Include timer for stress test.
