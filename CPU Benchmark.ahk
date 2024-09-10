@@ -47,7 +47,7 @@ For item in colItems
 gui, color, 0
 gui, font, cFFFFFF
 gui, font, bold
-Gui, Add, Text,vProcessorUpdateSpeed, %ProcessorName%`n`nBase Clock: %ProcessorSpeed% MHz
+Gui, Add, Text,vProcessorUpdateSpeed, %ProcessorName%`n`nBase Clock: %ProcessorSpeed%
 Gui, Add, Text,, Single-Thread Score
 Gui, Add, Edit, vST w100 readonly,
 Gui, Add, Text,, Multi-Thread Score
@@ -180,8 +180,14 @@ gui, submit, nohide
     ;--Control Progress Bar-;
     ProgressbarStatus = 0 ;resumes the progress bar
     Guicontrol, %RunCount%:, BenchText, Running Multi-Thread Test...
-
+if (RealTime != 1)
+    {
     sleep 11000
+	}
+	else
+	{
+	sleep 15000
+	}
     Loop %NoProcessors%
     {
     FileRead, Result, %A_WorkingDir%\Core%A_Index%.txt
