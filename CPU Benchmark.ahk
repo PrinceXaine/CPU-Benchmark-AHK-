@@ -13,7 +13,7 @@ if (A_IsAdmin = 0)
         Run *RunAs %A_ScriptDir%\CPU Benchmark.ahk,, UseErrorLevel
             if ErrorLevel
                 {
-                    MsgBox, You declined admin privileges. The script will continue without them.`n`nFeatures that require Admin Privileges:`n- Real-Time
+                    MsgBox, You declined admin privileges. The script will continue without them.`n`nFeatures that require Admin Privileges:`n- Real-Time Priority
                     goto SkipUAC
                 }
         ExitApp
