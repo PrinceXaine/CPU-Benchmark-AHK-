@@ -4,8 +4,8 @@
 - Autohotkey install Link: https://www.autohotkey.com/download/1.1/AutoHotkey112207_Install.exe
 - The program utilizes Factorials to stress the CPU.
 
-- ![image](https://github.com/user-attachments/assets/65fd6d05-7319-4d11-8c9d-0fdeaffd8339)
-- ![image](https://github.com/user-attachments/assets/b0947122-065f-49cf-a085-88ee3bffd7fd)
+![image](https://github.com/user-attachments/assets/65fd6d05-7319-4d11-8c9d-0fdeaffd8339)
+![image](https://github.com/user-attachments/assets/b0947122-065f-49cf-a085-88ee3bffd7fd)
 ![image](https://github.com/user-attachments/assets/aad0c5ca-b730-4a39-b653-022ddd9e06a3)
 
 
