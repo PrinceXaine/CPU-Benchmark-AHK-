@@ -5,7 +5,7 @@ SendMode Input
 SetBatchLines, -1
 RunCount = 1
 FinalResult = 0
-
+Gui +AlwaysOnTop
 
 ;///----ELEVATION-----///;
 if (A_IsAdmin = 0)
@@ -13,7 +13,7 @@ if (A_IsAdmin = 0)
         Run *RunAs %A_ScriptDir%\CPU Benchmark.ahk,, UseErrorLevel
             if ErrorLevel
                 {
-                    MsgBox, You declined admin privileges. The script will continue without them.`n`nFeatures that require Admin Privileges:`n- Real-Time Priority
+                    msgbox, 4096,, You declined admin privileges. The script will continue without them.`n`nFeatures that require Admin Privileges:`n- Real-Time Priority
                     goto SkipUAC
                 }
         ExitApp
@@ -95,7 +95,7 @@ Start:
     ;--Alert User of restricted mouse movement (once per session)--;
     if (runonce != 1)
     {
-    msgbox Mouse movement is blocked until the test completes. At times the program may appear unresponsive.`n`nPress "ESC" to free your mouse movement and exit the benchmark.
+        msgbox, 4096,, Mouse movement is blocked until the test completes. At times the program may appear unresponsive.`n`nPress "ESC" to free your mouse movement and exit the benchmark.
     runonce = 1
     }
    BlockInput, mousemove
@@ -106,7 +106,8 @@ Start:
     Gui %RunCount%:Add, Text, vBenchText, Running Single-Thread Test...
     Gui %RunCount%:Add, Progress, w300 cgreen vBenchbar range0-20
     Gui %RunCount%:Show,, Benchmarking...
-    Gui %RunCount%:-SysMenu
+    Gui %RunCount%:-SysMenu +AlwaysOnTop
+
     ;-----------------------;
 
     ;----Benchmark Setup----;   
@@ -253,7 +254,7 @@ loop %NoProcessors%
     {
         FileDelete, %A_WorkingDir%\Core%A_Index%.txt
     }
-msgbox Results saved in %A_ScriptDir%\CPUBenchmarkResults.txt
+msgbox, 4096,, Results saved in %A_ScriptDir%\CPUBenchmarkResults.txt
 Return
 
 ;///-----STRESS TEST------///;
